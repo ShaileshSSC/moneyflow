@@ -18,7 +18,7 @@ require '../controllers/RequestController.php';
 <body>
      <div class="balance"><span class="money">€ 100</span></div>
 
-     <div onclick="play()" class="play"><span>Play</span></div>
+     <div class="play"><span onclick="play()" >Play</span></div>
 </body>
 </html>
 
@@ -27,19 +27,23 @@ require '../controllers/RequestController.php';
 
 let balance = 100;
 
+document.querySelector('.money').innerHTML = '€ ' + balance;
 
 
 function play() {
-    balance--;
-    total = 1;
+    yourbet = Math.floor(Math.random() * 5) + 1;
+    balance-= yourbet;
+    total = 0;
     for (let index = 0; index < 4; index++) {
-        let bet = Math.floor(Math.random() * 3) + 1;
-        total += bet;
+        let bet = Math.floor(Math.random() * 5) + 1;
+        total += bet + yourbet;
     }
     let winner = Math.floor(Math.random() * 5) + 1;
     if(winner == 1) {
-        console.log(balance + " + " + total);
+        console.log("congrantz!! you won: " + balance + " + " + total);
         balance = balance + total;
+    } else {
+        console.log('lost')
     }
     document.querySelector('.money').innerHTML = '€ ' + balance;
 }
@@ -63,6 +67,11 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+
+.play > span:hover {
+ transform: scale(1.1);
 }
 
 .play > span {
